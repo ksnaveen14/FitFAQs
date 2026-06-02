@@ -1,0 +1,83 @@
+# Fitness & Nutrition FAQ
+# SOURCE: Placeholder document
+
+## Q: How much protein do I need to build muscle?
+Research consistently shows that 1.6–2.2 grams of protein per kilogram of body weight per day
+is the optimal range for muscle protein synthesis in resistance-trained individuals. Going higher
+(up to 3.0 g/kg) has not been shown to provide additional muscle-building benefit, though it
+is not harmful. Protein quality matters: prioritize complete proteins containing all essential
+amino acids (meat, eggs, dairy, soy).
+
+## Q: Is creatine safe and effective?
+Creatine monohydrate is one of the most well-researched supplements in sports nutrition.
+It is both safe and effective for improving strength, power output, and muscle mass.
+Dose: 3–5 grams daily. No loading phase required. Benefits appear within 2–4 weeks.
+It works by increasing phosphocreatine stores in muscle, which fuels ATP regeneration
+during high-intensity efforts lasting 1–10 seconds.
+
+## Q: Should I train fasted?
+Fasted training (typically morning sessions before eating) does not significantly enhance
+fat loss compared to fed training when total calories are matched over the day. Performance
+may suffer during fasted sessions for some individuals, particularly in strength sports.
+If you train fasted and feel strong, it is fine. If performance drops, eat a small pre-workout
+snack (banana, protein shake).
+
+## Q: What is intermittent fasting and does it help with fat loss?
+Intermittent fasting (IF) is an eating pattern that cycles between periods of fasting and eating.
+Common protocols: 16:8 (fast 16 hours, eat in 8-hour window), 5:2 (eat normally 5 days,
+restrict calories 2 days). IF is a tool for controlling caloric intake, not a metabolic magic trick.
+It works for fat loss only if it helps you sustain a caloric deficit. It is not superior to
+traditional caloric restriction when protein intake and calories are equated.
+
+## Q: Can I gain muscle and lose fat at the same time?
+Body recomposition — simultaneous muscle gain and fat loss — is possible, but predominantly
+for three groups: complete beginners, detrained individuals returning to exercise, and people
+with high body fat percentage. For trained individuals at relatively low body fat, the most
+efficient approach is alternating focused bulking and cutting phases.
+
+## Q: How important is sleep for fitness results?
+Sleep is arguably the most underrated factor in fitness. During slow-wave (deep) sleep, growth
+hormone is released at its highest levels. Sleep deprivation reduces testosterone, elevates
+cortisol, impairs muscle protein synthesis, and reduces glycogen replenishment. Aim for
+7–9 hours per night. Poor sleep can negate the benefits of good training and nutrition.
+
+## Q: What supplements are actually worth taking?
+Based on evidence quality:
+
+Tier 1 (Strong evidence, safe):
+- Creatine monohydrate: Strength and power
+- Caffeine: Endurance and focus
+- Protein powder: Convenient dietary protein
+
+Tier 2 (Moderate evidence):
+- Beta-alanine: Muscular endurance (causes tingling harmlessly)
+- Vitamin D3: Important if deficient (most people are)
+- Omega-3 fatty acids: Anti-inflammatory, heart health
+
+Tier 3 (Weak evidence or overhyped):
+- BCAAs (unnecessary if protein intake is adequate)
+- Pre-workout blends (just caffeine + marketing)
+- Fat burners (largely ineffective and sometimes dangerous)
+
+## Q: How do I break a weight-loss plateau?
+Plateaus occur because your body adapts — your TDEE decreases as you lose weight.
+Solutions:
+1. Recalculate TDEE based on current bodyweight and adjust calories downward
+2. Increase NEAT (non-exercise activity thermogenesis): walk more, take stairs
+3. Add or increase cardio volume
+4. Implement a diet break: eat at maintenance for 1–2 weeks to restore leptin levels
+5. Track food more accurately — portion creep is common
+
+## Q: Are carbohydrates bad for you?
+No. Carbohydrates are not inherently fattening. Fat gain results from a caloric surplus,
+not from carbohydrates specifically. Carbs are the primary fuel for brain function and
+high-intensity exercise. The quality of carbohydrates matters: whole grains, fruits, and
+vegetables provide fiber and micronutrients. Refined sugars and processed carbs should
+be minimized because they are calorie-dense and nutrient-poor.
+
+## Q: How long does it take to see results from strength training?
+Beginners typically notice strength gains within 2–3 weeks due to neuromuscular adaptations
+(your nervous system learns to recruit muscle fibers more efficiently). Visible muscle growth
+(hypertrophy) begins appearing at 6–8 weeks with consistent training and adequate nutrition.
+Significant physique changes typically become apparent to others at 3–6 months.
+Patience and consistency are the two most critical success factors.

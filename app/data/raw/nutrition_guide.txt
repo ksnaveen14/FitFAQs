@@ -1,0 +1,84 @@
+# Nutrition Guide for Active Adults
+# SOURCE: Placeholder document
+
+## Macronutrients Overview
+
+Macronutrients are the three primary fuel sources your body uses: protein, carbohydrates, and fats.
+Each plays a distinct role in supporting exercise, recovery, and overall health.
+
+### Protein
+Protein is essential for muscle repair and growth. Active individuals should target 1.6 to 2.2 grams
+of protein per kilogram of body weight daily. High-quality sources include chicken breast, eggs,
+Greek yogurt, lentils, tofu, and cottage cheese.
+
+Timing matters: consuming 20–40 grams of protein within 2 hours post-workout maximizes muscle
+protein synthesis. This is sometimes called the anabolic window.
+
+### Carbohydrates
+Carbohydrates are the body's preferred energy source during high-intensity exercise. Complex carbs
+like oats, brown rice, sweet potatoes, and quinoa provide sustained energy. Simple carbs like
+bananas or white rice are better suited for immediate pre- or post-workout fuel.
+
+Aim for 3–5 grams of carbohydrates per kilogram of bodyweight on training days, and 2–3 grams
+on rest days. Low-carb diets can impair performance in strength and endurance athletes.
+
+### Fats
+Healthy fats support hormone production, joint health, and absorption of fat-soluble vitamins
+(A, D, E, K). Prioritize unsaturated fats: avocado, olive oil, nuts, seeds, and fatty fish
+like salmon. Limit saturated fats to less than 10% of total daily calories.
+
+## Caloric Needs
+
+Total Daily Energy Expenditure (TDEE) is calculated by multiplying your Basal Metabolic Rate (BMR)
+by an activity multiplier:
+- Sedentary (little or no exercise): BMR × 1.2
+- Lightly active (1–3 days/week): BMR × 1.375
+- Moderately active (3–5 days/week): BMR × 1.55
+- Very active (6–7 days/week): BMR × 1.725
+- Extra active (physical job + hard training): BMR × 1.9
+
+For weight loss, create a deficit of 300–500 calories below TDEE. For muscle gain, add 200–300
+calories above TDEE. Aggressive cuts or bulks increase risk of muscle loss or fat gain.
+
+## Hydration
+
+Dehydration of just 2% body weight can impair both cognitive and physical performance.
+Aim for at least 35 ml of water per kilogram of body weight daily. Add 500–750 ml for
+each hour of moderate-to-intense exercise.
+
+Electrolytes — sodium, potassium, and magnesium — are lost in sweat. During sessions
+exceeding 60 minutes, electrolyte replenishment is important.
+
+## Meal Timing
+
+Pre-workout meal (2–3 hours before): Balanced meal with complex carbs, moderate protein,
+and low fat and fiber to avoid GI distress.
+
+Pre-workout snack (30–60 minutes before): Simple carbs + small amount of protein.
+Example: banana + protein shake.
+
+Post-workout (within 2 hours): Protein + carbohydrates to replenish glycogen and
+initiate muscle repair. Example: rice + grilled chicken + vegetables.
+
+## Micronutrients for Athletes
+
+Iron: Critical for oxygen transport. Deficiency leads to fatigue. Found in red meat, spinach,
+lentils. Pair with vitamin C for better absorption.
+
+Vitamin D: Supports bone health and immune function. Many athletes are deficient, especially
+those training indoors. 1000–4000 IU daily supplementation is commonly recommended.
+
+Magnesium: Involved in over 300 enzymatic reactions. Supports sleep quality and muscle
+relaxation. Found in nuts, seeds, leafy greens, and dark chocolate.
+
+Zinc: Supports testosterone levels and immune function. Found in oysters, beef, pumpkin seeds.
+
+## Sample Meal Plan (2500 kcal, 180g protein)
+
+Breakfast: 4 eggs scrambled + 1 cup oats + 1 cup berries + black coffee
+Snack: Greek yogurt (200g) + 1 tablespoon honey + 10 almonds
+Lunch: 200g grilled chicken + 1 cup brown rice + roasted broccoli + olive oil
+Snack: Protein shake (30g protein) + 1 banana
+Dinner: 200g salmon + sweet potato + steamed spinach + avocado
+
+Estimated macros: 180g protein / 250g carbs / 80g fat / ~2500 kcal

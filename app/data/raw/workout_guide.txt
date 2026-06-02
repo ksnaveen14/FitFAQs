@@ -1,0 +1,120 @@
+# Strength Training Fundamentals
+# SOURCE: Placeholder document
+
+## Progressive Overload
+
+Progressive overload is the foundational principle of strength training. It means consistently
+increasing the demand placed on your muscles over time. This can be achieved by:
+- Increasing weight lifted
+- Adding more reps or sets
+- Reducing rest periods
+- Improving exercise technique and range of motion
+
+Without progressive overload, muscles adapt and stop growing. Track your workouts in a log
+to ensure consistent progression week over week.
+
+## The Big Compound Lifts
+
+Compound lifts recruit multiple muscle groups simultaneously and produce the greatest hormonal
+response and overall strength adaptation.
+
+### Squat
+The squat is the king of lower body exercises. Primary muscles: quadriceps, glutes, hamstrings.
+Secondary: lower back, core. Key cues: keep chest tall, knees tracking over toes, hips
+below parallel for full range of motion. Begin with bodyweight, then goblet squat, then barbell.
+
+### Deadlift
+The deadlift builds total posterior chain strength: hamstrings, glutes, lower back, traps.
+Setup: bar over mid-foot, hip-width stance, double overhand grip. Hinge at hips, keep spine
+neutral, drive floor away. Do not round the lower back under heavy loads.
+
+### Bench Press
+Primary: pectorals, anterior deltoids, triceps. Cues: retract scapulae, feet flat on floor,
+bar path slightly diagonal, touch lower chest lightly, full lockout at top.
+
+### Overhead Press
+Builds shoulder strength and stability. Primary: deltoids, triceps. Secondary: upper traps,
+core. Press bar in a straight vertical path, lock out elbows at top, brace core throughout.
+
+### Barbell Row
+Essential for back development and postural balance. Primary: latissimus dorsi, rhomboids,
+rear deltoids. Keep torso at 45 degrees, pull bar to lower chest, squeeze shoulder blades.
+
+## Training Frequency and Volume
+
+Beginners (0–1 year): Full body 3x/week. 3 sets per exercise, 8–12 reps. Focus on form.
+Intermediate (1–3 years): Upper/lower split 4x/week. 4 sets per exercise, 6–12 reps.
+Advanced (3+ years): Push/pull/legs or bro-split 5–6x/week. Higher volume needed for stimulus.
+
+Minimum Effective Volume (MEV): The least amount of training that produces progress.
+Maximum Adaptive Volume (MAV): The sweet spot for growth.
+Maximum Recoverable Volume (MRV): Beyond this, recovery is compromised.
+
+Most lifters operate between 10–20 sets per muscle group per week.
+
+## Rest and Recovery
+
+Muscle is built during recovery, not during the workout itself. Workout causes micro-tears;
+sleep and nutrition repair and reinforce those fibers.
+
+Sleep: Aim for 7–9 hours. Growth hormone is predominantly released during deep sleep.
+Active recovery: Light walking, swimming, or yoga on rest days improves blood flow without taxing
+the central nervous system.
+
+Deload weeks: Every 4–8 weeks, reduce volume by 40–50% to allow full systemic recovery.
+
+## Beginner 3-Day Full Body Program (Weeks 1–8)
+
+Day A (Monday):
+- Squat 3x5
+- Bench Press 3x5
+- Barbell Row 3x5
+
+Day B (Wednesday):
+- Squat 3x5
+- Overhead Press 3x5
+- Deadlift 1x5
+
+Day C (Friday):
+- Squat 3x5
+- Bench Press 3x5
+- Barbell Row 3x5
+
+Increase weight by 2.5 kg per session for upper body, 5 kg for lower body.
+When you fail to complete reps for 3 consecutive sessions, deload 10% and rebuild.
+
+## Warm-Up Protocol
+
+Never skip warm-up. A proper warm-up:
+1. 5 minutes of light cardio (rowing, cycling)
+2. Dynamic stretching: leg swings, arm circles, hip circles
+3. Activation: glute bridges, band pull-aparts, face pulls
+4. Ramp sets: 50% × 8, 70% × 5, 85% × 3, then working weight
+
+## Common Mistakes
+
+1. Ego lifting: Using weight too heavy for proper form, increasing injury risk
+2. Skipping leg day: Creates muscular imbalance and hormonal disadvantage
+3. Not tracking: Without data, there is no progressive overload
+4. Insufficient protein: Muscles cannot grow without adequate amino acid supply
+5. Too much cardio during a bulk: Interferes with recovery and muscle protein synthesis
+
+## Cardiovascular Fitness
+
+Cardio and strength training are complementary, not conflicting.
+Zone 2 cardio (60–70% max HR) improves mitochondrial density and fat oxidation.
+HIIT (high-intensity intervals) improves VO2 max and metabolic conditioning.
+
+Recommended: 2–3 sessions of 30–45 minutes Zone 2 cardio per week alongside strength training.
+Keep cardio on separate days or after strength training to avoid compromising power output.
+
+## Body Composition Goals
+
+Cutting (fat loss): Caloric deficit of 300–500 kcal/day. Maintain strength training intensity
+to preserve muscle. Protein intake critical — aim for 2.2g/kg.
+
+Bulking (muscle gain): Caloric surplus of 200–300 kcal/day. Expect 0.25–0.5 kg weight gain
+per week. Any faster and excess will be stored as fat.
+
+Maintenance/body recomposition: Possible for beginners and returning lifters to simultaneously
+lose fat and gain muscle in a small caloric window around maintenance.
