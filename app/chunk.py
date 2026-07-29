@@ -43,9 +43,26 @@ class Chunk:
             "token_count": self.token_count
         }
 
+    @classmethod
+    def from_dict(cls, d: dict) -> "Chunk":
+        """Deserialize from JSON storage."""
+        return cls(
+            chunk_id    = d["chunk_id"],
+            text        = d["text"],
+            source      = d["source"],
+            page        = d.get("page", 0),
+            chunk_index = d.get("chunk_index", 0),
+            token_count = d.get("token_count", 0),
+            score       = d.get("score", 0.0),
+        )
+
     def to_json(self) -> str:
         return json.dumps(self.to_dict())
 
+    @classmethod
+    def from_json(cls, s: str) -> "Chunk":
+        return cls.from_dict(json.loads(s))
+    
 log = logging.getLogger(__name__)
 data_chunks = Path(__file__).parent / "data" / "chunks"
 CHUNKS_FILE = data_chunks / "chunks.jsonl"
@@ -166,6 +183,21 @@ def save_chunks(chunks: List[Chunk]) -> None:
             f.write(chunk.to_json() + "\n")
     log.info(f"Saved {len(chunks)} chunks → {CHUNKS_FILE}")
 
+
+def load_chunks() -> List[Chunk]:
+    """Load chunks from disk. Used by embed.py and retrieve.py."""
+    if not CHUNKS_FILE.exists():
+        raise FileNotFoundError(
+            f"No chunks file at {CHUNKS_FILE}. Run chunk_documents() first."
+        )
+    chunks = []
+    with open(CHUNKS_FILE, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                chunks.append(Chunk.from_json(line))
+    log.info(f"Loaded {len(chunks)} chunks from {CHUNKS_FILE}")
+    return chunks
 
 
 if __name__ == "__main__":
