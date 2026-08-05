@@ -130,7 +130,7 @@ def build_and_save_index() -> None:
     embeddings = encode_chunks(chunks, encoder)
     index = build_faiss_index(embeddings)
     save_index(index, chunks)
-    print(f"\n✓ H2 complete. Index has {index.ntotal} vectors.")
+    print(f"\n Index has {index.ntotal} vectors.")
 
 
 # ── CLI ────────────────────────────────────────────────────────────────────
