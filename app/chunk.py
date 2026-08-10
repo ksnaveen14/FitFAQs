@@ -12,8 +12,8 @@ import json
 import logging
 from pathlib import Path
 from typing import List
-from dataclasses import dataclass
-
+from dataclasses import dataclass, field
+from typing import Optional
 
 @dataclass
 class Chunk:
@@ -32,6 +32,8 @@ class Chunk:
     page       : int = 0
     chunk_index: int = 0
     token_count: int = 0
+    embedding  : Optional[list] = field(default=None, repr=False)
+    score      : float = 0.0
 
     def to_dict(self) -> dict:
         return {
@@ -40,7 +42,8 @@ class Chunk:
             "source"     : self.source,
             "page"       : self.page,
             "chunk_index": self.chunk_index,
-            "token_count": self.token_count
+            "token_count": self.token_count,
+            "score"      : self.score,
         }
 
     @classmethod
