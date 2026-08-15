@@ -25,8 +25,10 @@ TOP_K_DENSE  = 5    # FAISS returns top-5 dense hits
 TOP_K_SPARSE = 5    # BM25 returns top-5 sparse hits
 TOP_K_FINAL  = 5    # after RRF fusion, keep top-5 for LLM context
 RRF_K        = 60   # Reciprocal Rank Fusion constant (standard = 60)
-LOW_CONFIDENCE_THRESHOLD = 0.25 
 
+# Replaces LOW_CONFIDENCE_THRESHOLD = 0.25
+# RRF scores are unbounded-threshold-unsafe; gate on rank instead.
+RANK_QUALITY_THRESHOLD = 3  # top result must rank in top-3 of dense OR sparse
 log = logging.getLogger(__name__)
 
 
@@ -135,27 +137,35 @@ def retrieve(
 
     Returns:
         List[Chunk] with .score set to RRF score, sorted desc.
-        Returns [] if best score < LOW_CONFIDENCE_THRESHOLD (triggers fallback).
+        Returns [] if best score < RANK_QUALITY_THRESHOLD (triggers fallback).
     """
     dense_res  = dense_search(query, encoder, faiss_index, chunks)
     sparse_res = sparse_search(query, bm25)
-
+  
     log.debug(f"Dense hits: {len(dense_res)}, Sparse hits: {len(sparse_res)}")
-
+    if not sparse_res:
+            log.debug("Sparse retrieval returned zero hits — hybrid degraded to dense-only for this query.")
     fused = reciprocal_rank_fusion(dense_res, sparse_res)
 
     if not fused:
         log.warning("No retrieval results found.")
         return []
 
-    best_score = fused[0][1]
-    if best_score < LOW_CONFIDENCE_THRESHOLD:
-        log.warning(
-            f"Best RRF score {best_score:.4f} < threshold {LOW_CONFIDENCE_THRESHOLD}. "
-            "Triggering fallback."
-        )
-        return []
+    top_doc_id = fused[0][0]
+    dense_ranks = { idx: rank for rank, (idx, _) in enumerate(dense_res, start=1) }
+    sparse_ranks = { idx: rank for rank, (idx, _) in enumerate(sparse_res, start=1) }
 
+    best_dense_rank = dense_ranks.get(top_doc_id, float('inf'))
+    best_sparse_rank = sparse_ranks.get(top_doc_id, float('inf'))
+    best_individual_rank = min(best_dense_rank, best_sparse_rank)
+
+    if best_individual_rank > RANK_QUALITY_THRESHOLD:
+            log.warning(
+                f"Top fused doc {top_doc_id} only reached rank {best_individual_rank} "
+                f"in its best retriever (threshold: top-{RANK_QUALITY_THRESHOLD}). "
+                "Triggering fallback."
+            )
+            return []
     # Build output: attach scores and return Chunk objects
     result_chunks: List[Chunk] = []
     for chunk_idx, rrf_score in fused[:top_k]:
@@ -200,7 +210,7 @@ if __name__ == "__main__":
     import sys
     query = " ".join(sys.argv[1:]) or "How much protein do I need?"
     print(f"\nQuery: {query}")
-
+    import pdb; pdb.set_trace()
     r = Retriever()
     results = r.query(query)
 
