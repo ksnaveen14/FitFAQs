@@ -184,8 +184,6 @@ class Retriever:
     Stateful wrapper that loads all retrieval components once at startup.
     app.py instantiates this once and reuses it across queries.
 
-    This is the pattern you'd use in production — avoid re-loading models
-    on every request.
     """
     def __init__(self):
         log.info("Initialising retriever…")
@@ -210,7 +208,7 @@ if __name__ == "__main__":
     import sys
     query = " ".join(sys.argv[1:]) or "How much protein do I need?"
     print(f"\nQuery: {query}")
-    import pdb; pdb.set_trace()
+
     r = Retriever()
     results = r.query(query)
 

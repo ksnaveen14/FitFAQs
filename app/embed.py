@@ -17,8 +17,7 @@ from typing import List
 import faiss
 from sentence_transformers import SentenceTransformer
 
-from schema import Chunk
-from chunk import load_chunks
+from chunk import Chunk, load_chunks
 
 log = logging.getLogger(__name__)
 
