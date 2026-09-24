@@ -12,69 +12,17 @@ import json
 import logging
 from pathlib import Path
 from typing import List
-from dataclasses import dataclass, field
-from typing import Optional
 
-@dataclass
-class Chunk:
-    """
-    Fields:
-        chunk_id   : globally unique identifier  (used as FAISS lookup key)
-        text       : the actual text content
-        source     : filename it came from
-        page       : page number if available
-        chunk_index: position within that document
-        token_count: approximate token count
-    """
-    chunk_id   : str
-    text       : str
-    source     : str
-    page       : int = 0
-    chunk_index: int = 0
-    token_count: int = 0
-    embedding  : Optional[list] = field(default=None, repr=False)
-    score      : float = 0.0
+from config import CHUNK_SIZE, CHUNK_OVERLAP, DATA_CHUNKS
+from schema import Chunk
 
-    def to_dict(self) -> dict:
-        return {
-            "chunk_id"   : self.chunk_id,
-            "text"       : self.text,
-            "source"     : self.source,
-            "page"       : self.page,
-            "chunk_index": self.chunk_index,
-            "token_count": self.token_count,
-            "score"      : self.score,
-        }
-
-    @classmethod
-    def from_dict(cls, d: dict) -> "Chunk":
-        """Deserialize from JSON storage."""
-        return cls(
-            chunk_id    = d["chunk_id"],
-            text        = d["text"],
-            source      = d["source"],
-            page        = d.get("page", 0),
-            chunk_index = d.get("chunk_index", 0),
-            token_count = d.get("token_count", 0),
-            score       = d.get("score", 0.0),
-        )
-
-    def to_json(self) -> str:
-        return json.dumps(self.to_dict())
-
-    @classmethod
-    def from_json(cls, s: str) -> "Chunk":
-        return cls.from_dict(json.loads(s))
-    
 log = logging.getLogger(__name__)
-data_chunks = Path(__file__).parent / "data" / "chunks"
-CHUNKS_FILE = data_chunks / "chunks.jsonl"
-CHUNK_SIZE    = 512   
-CHUNK_OVERLAP = 50  
+CHUNKS_FILE = DATA_CHUNKS / "chunks.jsonl"
+
 
 def _word_tokenise(text: str) -> list[str]:
     """
-    Simple whitespace tokenizer. Can be replaced with something more sophisticated if needed.
+    Simple whitespace tokenizer. Can be replaced with tiktoken for exact tokenization.
     """
     return text.split()
 
@@ -132,7 +80,7 @@ def chunk_text(
         end = min(start + chunk_size, len(words))
         window_words = words[start:end]
         window_text = " ".join(window_words).strip()
- 
+
         if window_text:
             chunk = Chunk(
                 chunk_id    = _make_chunk_id(source, page, chunk_index),
@@ -145,7 +93,7 @@ def chunk_text(
             chunks.append(chunk)
             chunk_index += 1
 
-        # Slide forward by (chunk_size - overlap)
+        # Slide forward by a stride length (chunk_size - overlap)
         start += stride
 
     return chunks

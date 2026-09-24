@@ -21,15 +21,12 @@ from typing import List
 from openai import OpenAI
 from datasets import Dataset
 
-
-from chunk import Chunk
+from config import RAGAS_SAMPLE_SIZE, TOP_K_FINAL, LOG_DIR, OPENAI_MODEL
+from schema import Chunk
 from chunk import load_chunks
 from retrieve import Retriever
 from generate import generate_answer
 
-RAGAS_SAMPLE_SIZE = 10   # number of Q&A pairs to auto-generate for eval
-LOG_DIR    = Path(__file__).parent / "logs"
-OPENAI_MODEL      = "gpt-3.5-turbo"
 
 log = logging.getLogger(__name__)
 EVAL_RESULTS_FILE = LOG_DIR / "ragas_results.json"
@@ -167,13 +164,14 @@ def run_ragas_eval(rows: list[dict]) -> dict:
 # -- Step 3: Save + report -----------------------------------------------
 
 def save_results(result: dict, rows: list[dict]) -> None:
-    LOG_DIR.mkdir(parents=True, exist_ok=True)
+
     output = {
         "summary": result["summary"],
         "per_row": result["per_row"],
         "num_pairs": len(rows),
         "sample_pairs": rows[:3],  # save first 3 for inspection
     }
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
     with open(EVAL_RESULTS_FILE, "w") as f:
         json.dump(output, f, indent=2)
     log.info(f"Results saved → {EVAL_RESULTS_FILE}")

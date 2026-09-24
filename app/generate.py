@@ -1,5 +1,5 @@
 """
-generate.py : LLM generation with citation layer.
+generate.py - LLM generation with citation layer.
 
 WHAT IT DOES:
   1. Takes retrieved chunks (List[Chunk]) from retrieve.py
@@ -16,19 +16,15 @@ from typing import List, Optional
 
 from openai import OpenAI
 
-from chunk import Chunk
-
-OPENAI_MODEL      = "gpt-3.5-turbo"
-OPENAI_MAX_TOKENS = 512
-OPENAI_TEMPERATURE = 0.2   # low = factual, deterministic.
-FALLBACK_MESSAGE = (
-    "I couldn't find relevant information in the fitness/nutrition documents. "
-    "Please consult a certified nutritionist or trainer for personalised advice."
+from config import (
+    OPENAI_MODEL, OPENAI_MAX_TOKENS, OPENAI_TEMPERATURE, FALLBACK_MESSAGE
 )
+from schema import Chunk
+
 log = logging.getLogger(__name__)
 
 
-# ── Citation schema ────────────────────────────────────────────────────────
+# -- Citation schema --------------------------------------------------------
 
 @dataclass
 class Citation:
@@ -49,7 +45,7 @@ class RAGResponse:
     query      : str = ""
 
 
-# ── Prompt construction ────────────────────────────────────────────────────
+# -- Prompt construction ----------------------------------------------------
 
 SYSTEM_PROMPT = """You are a knowledgeable fitness and nutrition assistant.
 Your role is to provide accurate, evidence-based information about exercise,
@@ -93,13 +89,13 @@ def build_user_prompt(query: str, chunks: List[Chunk]) -> str:
     )
 
 
-# ── LLM call ──────────────────────────────────────────────────────────────
+# -- LLM call --------------------------------------------------------------
 
 def call_openai(system: str, user: str) -> str:
     """
     Thin wrapper around OpenAI Chat Completions.
     API key is read from OPENAI_API_KEY environment variable.
-    Raises on API errors — callers should handle.
+    Raises on API errors - callers should handle.
     """
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
     response = client.chat.completions.create(
@@ -114,7 +110,7 @@ def call_openai(system: str, user: str) -> str:
     return response.choices[0].message.content.strip()
 
 
-# ── Citation extraction ────────────────────────────────────────────────────
+# -- Citation extraction ----------------------------------------------------
 
 def build_citations(chunks: List[Chunk]) -> List[Citation]:
     """Build Citation objects from retrieved chunks for display in UI."""
@@ -130,7 +126,7 @@ def build_citations(chunks: List[Chunk]) -> List[Citation]:
     ]
 
 
-# ── Main generation function ───────────────────────────────────────────────
+# -- Main generation function -----------------------------------------------
 
 def generate_answer(query: str, chunks: List[Chunk]) -> RAGResponse:
     """
@@ -143,7 +139,7 @@ def generate_answer(query: str, chunks: List[Chunk]) -> RAGResponse:
     Returns:
         RAGResponse with answer text, citations, and fallback flag.
     """
-    # ── Fallback gate ──────────────────────────────────────────────────────
+    # -- Fallback gate ------------------------------------------------------
     if not chunks:
         log.warning("No chunks provided to generate.py → using fallback message.")
         return RAGResponse(
@@ -153,10 +149,10 @@ def generate_answer(query: str, chunks: List[Chunk]) -> RAGResponse:
             query=query,
         )
 
-    # ── Build prompt ───────────────────────────────────────────────────────
+    # -- Build prompt -------------------------------------------------------
     user_prompt = build_user_prompt(query, chunks)
 
-    # ── Call LLM ──────────────────────────────────────────────────────────
+    # -- Call LLM ----------------------------------------------------------
     try:
         answer = call_openai(SYSTEM_PROMPT, user_prompt)
         log.info(f"LLM answered ({len(answer)} chars)")
@@ -169,7 +165,7 @@ def generate_answer(query: str, chunks: List[Chunk]) -> RAGResponse:
             query=query,
         )
 
-    # ── Build citations ────────────────────────────────────────────────────
+    # -- Build citations ----------------------------------------------------
     citations = build_citations(chunks)
 
     return RAGResponse(
@@ -180,7 +176,7 @@ def generate_answer(query: str, chunks: List[Chunk]) -> RAGResponse:
     )
 
 
-# ── CLI test ───────────────────────────────────────────────────────────────
+# -- CLI test ---------------------------------------------------------------
 if __name__ == "__main__":
     import sys
     from retrieve import Retriever

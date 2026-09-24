@@ -1,14 +1,17 @@
-"""Load raw text/PDF documents from data/raw/ into a normalized tuple format(filename, page_number, raw_text)."""
+"""
+Load raw text/PDF documents from data/raw/ into a normalized tuple format(filename, page_number, raw_text).
+"""
 
 import logging
 from pathlib import Path
 from typing import Generator
 
+from config import DATA_RAW
+
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
 log = logging.getLogger(__name__)
 
-DATA_RAW   = Path(__file__).parent / "data" / "raw"
-
+# -- Placeholder corpus (used when data/raw/ is empty) ---------------------
 PLACEHOLDER_DOCS = [
     {
         "filename": "nutrition_basics_placeholder.txt",
@@ -17,7 +20,7 @@ PLACEHOLDER_DOCS = [
 carbohydrates, and fats. Proteins are essential for muscle repair and growth.
 The recommended daily intake of protein for sedentary adults is 0.8 grams per
 kilogram of body weight. For athletes engaged in resistance training, protein
-requirements rise to 1.6–2.2 grams per kilogram of body weight per day.
+requirements rise to 1.6-2.2 grams per kilogram of body weight per day.
 
 Carbohydrates are the body's primary energy source. Complex carbohydrates such
 as oats, brown rice, and sweet potatoes provide sustained energy and contain
@@ -26,13 +29,13 @@ glucose spikes followed by crashes, reducing sustained performance.
 
 Dietary fats are critical for hormone production, vitamin absorption, and brain
 health. Unsaturated fats from olive oil, avocados, and nuts are preferable to
-saturated and trans fats. Adults should aim for fats to constitute 20–35% of
+saturated and trans fats. Adults should aim for fats to constitute 20-35% of
 total daily caloric intake.""",
 
             """Hydration is often overlooked in fitness planning. Water regulates body
 temperature, lubricates joints, and transports nutrients. Dehydration of even
-1–2% of body weight impairs cognitive and physical performance significantly.
-The general recommendation is 2–3 litres of water per day for adults, with
+1-2% of body weight impairs cognitive and physical performance significantly.
+The general recommendation is 2-3 litres of water per day for adults, with
 additional intake of 500ml per 30 minutes of moderate-to-vigorous exercise.
 
 Electrolytes—sodium, potassium, magnesium, and calcium—are lost through sweat
@@ -56,14 +59,14 @@ lifts before adding isolation work.
 
 Recovery is when growth actually occurs. Muscle fibres are broken down during
 training and rebuilt stronger during rest. Beginners require at least 48 hours
-of rest between training the same muscle group. Sleep of 7–9 hours per night
+of rest between training the same muscle group. Sleep of 7-9 hours per night
 is non-negotiable for optimal recovery and muscle protein synthesis.""",
 
             """Cardiovascular training improves heart efficiency, increases VO2 max, and
-burns calories. Zone 2 cardio—sustained effort at 60–70% of maximum heart rate—
+burns calories. Zone 2 cardio—sustained effort at 60-70% of maximum heart rate—
 builds aerobic base and improves fat oxidation. High-Intensity Interval Training
 (HIIT) is effective for improving cardiovascular fitness in less time but is
-more taxing on the nervous system and should not exceed 2–3 sessions per week.
+more taxing on the nervous system and should not exceed 2-3 sessions per week.
 
 A balanced weekly training plan for a general fitness goal might include:
 3 resistance training sessions, 2 zone-2 cardio sessions, 1 HIIT session,

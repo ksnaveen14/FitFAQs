@@ -17,21 +17,17 @@ from typing import List
 import faiss
 from sentence_transformers import SentenceTransformer
 
-from chunk import Chunk, load_chunks
+from config import EMBED_MODEL, EMBED_DIM, INDEX_DIR
+from schema import Chunk
+from chunk import load_chunks
 
 log = logging.getLogger(__name__)
-
-BASE_DIR   = Path(__file__).parent
-INDEX_DIR  = BASE_DIR / "indexes"      
-
-EMBED_MODEL = "all-MiniLM-L6-v2"   # fast, 384-dim, good retrieval baseline
-EMBED_DIM   = 384
 
 INDEX_FILE    = INDEX_DIR / "faiss.index"
 METADATA_FILE = INDEX_DIR / "faiss_metadata.json"
 
 
-# ── Embedding ──────────────────────────────────────────────────────────────
+# -- Embedding --------------------------------------------------------------
 
 def get_encoder() -> SentenceTransformer:
     """Load (and cache) the sentence transformer model."""
@@ -61,11 +57,11 @@ def encode_chunks(
         normalize_embeddings=True,  # L2-normalise → cosine similarity via dot product
     )
 
-    # Ensure float32 - FAISS needs it
+    # float32 - FAISS needs it
     return embeddings.astype(np.float32)
 
 
-# ── FAISS index ────────────────────────────────────────────────────────────
+# -- FAISS index ------------------------------------------------------------
 
 def build_faiss_index(embeddings: np.ndarray) -> faiss.IndexFlatIP:
     """
@@ -121,7 +117,7 @@ def load_index() -> tuple[faiss.IndexFlatIP, List[Chunk]]:
     return index, chunks
 
 
-# ── Pipeline entry point ───────────────────────────────────────────────────
+# -- Pipeline entry point ---------------------------------------------------
 
 def build_and_save_index() -> None:
     chunks = load_chunks()
@@ -132,6 +128,6 @@ def build_and_save_index() -> None:
     print(f"\n Index has {index.ntotal} vectors.")
 
 
-# ── CLI ────────────────────────────────────────────────────────────────────
+# -- CLI --------------------------------------------------------------------
 if __name__ == "__main__":
     build_and_save_index()
