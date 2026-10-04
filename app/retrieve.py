@@ -16,28 +16,22 @@ from typing import List
 from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
 
-
-from chunk import Chunk
+from config import (
+    TOP_K_DENSE, TOP_K_SPARSE, TOP_K_FINAL, RRF_K,
+    RANK_QUALITY_THRESHOLD, EMBED_MODEL
+)
+from schema import Chunk
 from embed import load_index, get_encoder
-from embed import EMBED_MODEL, EMBED_DIM
 
-TOP_K_DENSE  = 5    # FAISS returns top-5 dense hits
-TOP_K_SPARSE = 5    # BM25 returns top-5 sparse hits
-TOP_K_FINAL  = 5    # after RRF fusion, keep top-5 for LLM context
-RRF_K        = 60   # Reciprocal Rank Fusion constant (standard = 60)
-
-# Replaces LOW_CONFIDENCE_THRESHOLD = 0.25
-# RRF scores are unbounded-threshold-unsafe; gate on rank instead.
-RANK_QUALITY_THRESHOLD = 3  # top result must rank in top-3 of dense OR sparse
 log = logging.getLogger(__name__)
 
 
-# ── Retrieval components ───────────────────────────────────────────────────
+# -- Retrieval components ---------------------------------------------------
 
 def build_bm25(chunks: List[Chunk]) -> BM25Okapi:
     """
     Build BM25 index from chunk texts.
-    Tokenised as lowercase word lists — matches BM25's expectation.
+    Tokenised as lowercase word lists - matches BM25's expectation.
     BM25Okapi is the standard variant with tf saturation parameter k1.
     """
     tokenised_corpus = [c.text.lower().split() for c in chunks]
@@ -101,7 +95,7 @@ def reciprocal_rank_fusion(
     Returns list of (chunk_index, rrf_score) sorted by rrf_score descending.
 
     WHY RRF OVER SCORE NORMALISATION:
-      BM25 scores can be 0–50+; cosine scores are 0–1. Simple average would
+      BM25 scores can be 0-50+; cosine scores are 0-1. Simple average would
       be dominated by BM25. RRF works purely on ranks, eliminating scale bias.
     """
     rrf_scores: dict[int, float] = {}
@@ -141,10 +135,10 @@ def retrieve(
     """
     dense_res  = dense_search(query, encoder, faiss_index, chunks)
     sparse_res = sparse_search(query, bm25)
-  
+
     log.debug(f"Dense hits: {len(dense_res)}, Sparse hits: {len(sparse_res)}")
     if not sparse_res:
-            log.debug("Sparse retrieval returned zero hits — hybrid degraded to dense-only for this query.")
+            log.debug("Sparse retrieval returned zero hits - hybrid degraded to dense-only for this query.")
     fused = reciprocal_rank_fusion(dense_res, sparse_res)
 
     if not fused:
@@ -159,6 +153,7 @@ def retrieve(
     best_sparse_rank = sparse_ranks.get(top_doc_id, float('inf'))
     best_individual_rank = min(best_dense_rank, best_sparse_rank)
 
+    #FallBack gating: if top fused doc is not in top-3 of either retriever, trigger fallback
     if best_individual_rank > RANK_QUALITY_THRESHOLD:
             log.warning(
                 f"Top fused doc {top_doc_id} only reached rank {best_individual_rank} "
@@ -166,6 +161,7 @@ def retrieve(
                 "Triggering fallback."
             )
             return []
+    
     # Build output: attach scores and return Chunk objects
     result_chunks: List[Chunk] = []
     for chunk_idx, rrf_score in fused[:top_k]:
@@ -177,7 +173,7 @@ def retrieve(
     return result_chunks
 
 
-# ── Convenience loader (used by app.py and generate.py) ───────────────────
+# -- Convenience loader (used by app.py and generate.py) -------------------
 
 class Retriever:
     """
@@ -203,10 +199,10 @@ class Retriever:
         )
 
 
-# ── CLI test ───────────────────────────────────────────────────────────────
+# -- CLI test ---------------------------------------------------------------
 if __name__ == "__main__":
     import sys
-    query = " ".join(sys.argv[1:]) or "How much protein do I need?"
+    query = " ".join(sys.argv[1:]) or "How much protein do I need per day?"
     print(f"\nQuery: {query}")
 
     r = Retriever()

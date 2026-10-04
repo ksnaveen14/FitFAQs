@@ -1,8 +1,6 @@
 """
 app.py -: Streamlit frontend.
 
-Run with:  streamlit run app.py
-
 WHAT IT DOES:
   - Clean chat interface for fitness/nutrition Q&A
   - Shows retrieved citations in expandable sections below each answer
@@ -10,17 +8,6 @@ WHAT IT DOES:
   - Session state preserves conversation history
   - Displays fallback warning when retrieval confidence is low
 
-INTERVIEW DEFENCE:
-  "Why Streamlit over Flask/FastAPI?"
-  → Streamlit lets you build a working demo in one file with no HTML.
-    For a portfolio RAG project, the goal is to demo the ML pipeline,
-    not showcase web dev. FastAPI would be the right choice for a
-    production API with proper auth and horizontal scaling.
-
-  "How does session state work here?"
-  → st.session_state persists data across Streamlit reruns (which happen
-    on every user interaction). We store chat_history as a list of dicts
-    and the Retriever object (so it's not re-initialised on every query).
 """
 
 import os
@@ -28,22 +15,17 @@ import shutil
 import json
 import streamlit as st
 
-
+from config import DATA_RAW, LOG_DIR, FALLBACK_MESSAGE
 from ingest import load_documents
 from chunk import chunk_documents, save_chunks
 from embed import build_and_save_index
 from retrieve import Retriever
 from generate import generate_answer
 
-from embed import BASE_DIR
-from ingest import DATA_RAW
-from generate import FALLBACK_MESSAGE
-from eval import LOG_DIR
-LOG_DIR    = BASE_DIR / "logs"
 
 # ── Page config ────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="FitRAG — Fitness & Nutrition Assistant",
+    page_title="FitRAG - Fitness & Nutrition Assistant",
     page_icon="💪",
     layout="wide",
 )
@@ -62,7 +44,7 @@ if "retriever" not in st.session_state:
 def get_retriever() -> Retriever:
     """
     Load once, cache across all sessions.
-    st.cache_resource keeps this in memory — we don't reload the
+    st.cache_resource keeps this in memory - we don't reload the
     embedding model + FAISS index on every query.
     """
     return Retriever()
@@ -124,7 +106,7 @@ with st.sidebar:
 
 
 # ── Main UI ────────────────────────────────────────────────────────────────
-st.title("💪 FitRAG — Fitness & Nutrition Assistant")
+st.title("💪 FitRAG - Fitness & Nutrition Assistant")
 st.caption(
     "Ask questions about exercise, nutrition, meal planning, and healthy living. "
     "Answers are grounded in uploaded documents with source citations."
@@ -148,7 +130,7 @@ for msg in st.session_state.chat_history:
             with st.expander(f"📚 {len(msg['citations'])} Source(s) Used"):
                 for c in msg["citations"]:
                     st.markdown(
-                        f"**{c['source']}** — Page {c['page']}  "
+                        f"**{c['source']}** - Page {c['page']}  "
                         f"*(relevance: {c['rrf_score']:.3f})*"
                     )
                     st.caption(c["excerpt"])
@@ -168,7 +150,7 @@ if prompt := st.chat_input("Ask about fitness or nutrition…"):
             response = generate_answer(prompt, chunks)
 
         if response.used_fallback:
-            st.warning("⚠️ Low retrieval confidence — showing fallback response.")
+            st.warning("⚠️ Low retrieval confidence - showing fallback response.")
 
         st.markdown(response.answer)
 
@@ -177,7 +159,7 @@ if prompt := st.chat_input("Ask about fitness or nutrition…"):
             with st.expander(f"📚 {len(response.citations)} Source(s) Used"):
                 for c in response.citations:
                     st.markdown(
-                        f"**{c.source}** — Page {c.page}  "
+                        f"**{c.source}** - Page {c.page}  "
                         f"*(relevance: {c.rrf_score:.3f})*"
                     )
                     st.caption(c.excerpt)
