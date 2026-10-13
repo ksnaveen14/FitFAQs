@@ -12,6 +12,7 @@ WHAT IT DOES:
 import logging
 import numpy as np
 from typing import List
+import re
 
 from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
@@ -25,6 +26,15 @@ from embed import load_index, get_encoder
 
 log = logging.getLogger(__name__)
 
+_TOKEN_RE = re.compile(r"\w+")
+
+def tokenize(text: str) -> list[str]:
+    """
+    Tokenise a string into lowercase words, stripping punctuation.
+    Returns list of tokens (empty if no valid tokens).
+    """
+    return _TOKEN_RE.findall(text.lower())
+
 
 # -- Retrieval components ---------------------------------------------------
 
@@ -34,7 +44,7 @@ def build_bm25(chunks: List[Chunk]) -> BM25Okapi:
     Tokenised as lowercase word lists - matches BM25's expectation.
     BM25Okapi is the standard variant with tf saturation parameter k1.
     """
-    tokenised_corpus = [c.text.lower().split() for c in chunks]
+    tokenised_corpus = [tokenize(c.text) for c in chunks]
     return BM25Okapi(tokenised_corpus)
 
 
@@ -73,7 +83,9 @@ def sparse_search(
     """
     Query BM25 index. Returns list of (chunk_index, score) sorted by score desc.
     """
-    query_tokens = query.lower().split()
+    query_tokens = tokenize(query)
+    if not query_tokens:
+        return []
     scores = bm25.get_scores(query_tokens)
     # argsort ascending, take last top_k, reverse
     top_indices = np.argsort(scores)[::-1][:top_k]

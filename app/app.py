@@ -20,8 +20,7 @@ from ingest import load_documents
 from chunk import chunk_documents, save_chunks
 from embed import build_and_save_index
 from retrieve import Retriever
-from generate import generate_answer
-
+from pipeline import run_query
 
 # ── Page config ────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -146,8 +145,9 @@ if prompt := st.chat_input("Ask about fitness or nutrition…"):
     # Generate response
     with st.chat_message("assistant"):
         with st.spinner("Searching documents and generating answer…"):
-            chunks   = retriever.query(prompt)
-            response = generate_answer(prompt, chunks)
+            result = run_query(retriever, prompt)
+            chunks = result.chunks
+            response = result.response
 
         if response.used_fallback:
             st.warning("⚠️ Low retrieval confidence - showing fallback response.")

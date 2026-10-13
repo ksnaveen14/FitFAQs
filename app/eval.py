@@ -25,8 +25,7 @@ from config import RAGAS_SAMPLE_SIZE, TOP_K_FINAL, LOG_DIR, OPENAI_MODEL
 from schema import Chunk
 from chunk import load_chunks
 from retrieve import Retriever
-from generate import generate_answer
-
+from pipeline import run_query
 
 log = logging.getLogger(__name__)
 EVAL_RESULTS_FILE = LOG_DIR / "ragas_results.json"
@@ -86,9 +85,10 @@ def build_eval_dataset(
         if not question:
             continue
 
-        retrieved = retriever.query(question)
-        response  = generate_answer(question, retrieved)
-
+        result = run_query(retriever, question)
+        retrieved = result.chunks
+        response  = result.response
+    
         if response.used_fallback:
             log.info(f"  Skipping (fallback triggered) — q: {question[:50]}")
             continue
