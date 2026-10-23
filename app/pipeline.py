@@ -1,6 +1,5 @@
 """
 pipeline.py — single entry point for retrieve -> generate, with timing.
-app.py and eval.py both call run_query(), so P3 logging goes in ONE place.
 """
 import time
 from dataclasses import dataclass

@@ -77,11 +77,11 @@ and 1 full rest or active recovery day (yoga, walking, stretching).""",
 
 
 def _load_txt(path: Path) -> Generator[tuple[str, int, str], None, None]:
-    """Yield (filename, page=0, full_text) for a .txt file."""
+    """Yield (filename, page=1, full_text) for a .txt file. Plain text files are treated as single-page documents."""
     try:
         text = path.read_text(encoding="utf-8", errors="replace").strip()
         if text:
-            yield (path.name, 0, text)
+            yield (path.name, 1, text)
     except Exception as e:
         log.warning(f"Could not read {path.name}: {e}")
 
@@ -89,13 +89,13 @@ def _load_txt(path: Path) -> Generator[tuple[str, int, str], None, None]:
 def _load_pdf(path: Path) -> Generator[tuple[str, int, str], None, None]:
     """Yield (filename, page_number, page_text) for each page of a .pdf."""
     try:
-        import pypdf  # optional dependency; install with: pip install pypdf
+        import pypdf 
         reader = pypdf.PdfReader(str(path))
-        for i, page in enumerate(reader.pages):
-            text = page.extract_text() or ""
-            text = text.strip()
-            if text:
-                yield (path.name, i, text)
+        for i, page in enumerate(reader.pages, start=1):
+            text = (page.extract_text() or "").strip()
+            if not text:
+                log.warning(f"{path.name} page {i}: no extractable text (scanned? needs OCR)")
+            yield (path.name, i, text)
     except ImportError:
         log.warning("pypdf not installed. Skipping PDF. Run: pip install pypdf")
     except Exception as e:
@@ -121,7 +121,7 @@ def load_documents() -> list[tuple[str, int, str]]:
             "Drop your fitness/nutrition docs into data/raw/ to use real content."
         )
         for doc in PLACEHOLDER_DOCS:
-            for page_num, page_text in enumerate(doc["pages"]):
+            for page_num, page_text in enumerate(doc["pages"], start=1):
                 docs.append((doc["filename"], page_num, page_text.strip()))
         return docs
 

@@ -57,8 +57,8 @@ with st.sidebar:
     # Document upload
     st.subheader("📄 Upload Documents")
     uploaded_files = st.file_uploader(
-        "Upload fitness/nutrition docs (.txt)",
-        type=["txt"],
+        "Upload fitness/nutrition docs (.txt or .pdf)",
+        type=["txt", "pdf"],
         accept_multiple_files=True,
     )
 
@@ -91,7 +91,6 @@ with st.sidebar:
     if ragas_file.exists():
         with open(ragas_file) as f:
             results = json.load(f)
-        # scores = results.get("scores", {})
         scores = results.get("summary", {})
         for metric, score in scores.items():
             label = metric.replace("_", " ").title()
