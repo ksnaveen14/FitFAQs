@@ -39,6 +39,9 @@ class Chunk:
     # These are populated later in the pipeline — NOT by chunk.py
     embedding  : Optional[list] = field(default=None, repr=False)
     score      : float = 0.0
+    dense_score: float = 0.0   # raw dense cosine similarity (0-1), set only by retrieve.py.
+                               # Distinct from `score` (fused RRF rank score, scale-free).
+                               # 0.0 for a chunk that matched via BM25 only, not FAISS.
 
     def to_dict(self) -> dict:
         """Serialize for JSON storage. Excludes embedding (too large)."""
@@ -50,6 +53,7 @@ class Chunk:
             "chunk_index": self.chunk_index,
             "token_count": self.token_count,
             "score"      : self.score,
+            "dense_score": self.dense_score,
         }
 
     @classmethod
@@ -63,6 +67,7 @@ class Chunk:
             chunk_index = d.get("chunk_index", 0),
             token_count = d.get("token_count", 0),
             score       = d.get("score", 0.0),
+            dense_score = d.get("dense_score", 0.0),
         )
 
     def to_json(self) -> str:

@@ -34,7 +34,7 @@ class Citation:
     chunk_id   : str
     excerpt    : str    # first 200 chars of the chunk
     rrf_score  : float
-
+    dense_score: float   # raw cosine similarity; 0.0 if this chunk was BM25-only
 
 @dataclass
 class RAGResponse:
@@ -56,7 +56,8 @@ STRICT RULES:
 2. If the answer is not in the context, say: "I don't have enough information
    in the provided documents to answer this reliably."
 3. Do not make up statistics, dosages, or recommendations not present in context.
-4. Cite sources inline using [Source: filename, Page N] format.
+4. Cite sources inline using [Source: filename] format, or [Source: filename, Page N]
+   when the source has page numbers (page-based sources only - not every document has pages).
 5. Be concise and practical. Bullet points are welcome for lists."""
 
 
@@ -76,8 +77,9 @@ def build_user_prompt(query: str, chunks: List[Chunk]) -> str:
     """
     context_parts = []
     for i, chunk in enumerate(chunks, 1):
+        page_suffix = f", Page {chunk.page}" if chunk.page > 0 else ""
         context_parts.append(
-            f"[{i}] Source: {chunk.source}, Page {chunk.page}\n{chunk.text}"
+            f"[{i}] Source: {chunk.source}{page_suffix}\n{chunk.text}"
         )
     context_str = "\n\n".join(context_parts)
 
@@ -85,7 +87,7 @@ def build_user_prompt(query: str, chunks: List[Chunk]) -> str:
         f"CONTEXT PASSAGES:\n{context_str}\n\n"
         f"QUESTION:\n{query}\n\n"
         f"Answer based only on the context above. "
-        f"Cite sources inline as [Source: filename, Page N]."
+        f"Cite sources inline as [Source: filename] or [Source: filename, Page N] when source has page numbers."
     )
 
 
@@ -121,6 +123,7 @@ def build_citations(chunks: List[Chunk]) -> List[Citation]:
             chunk_id  = c.chunk_id,
             excerpt   = c.text[:200] + ("…" if len(c.text) > 200 else ""),
             rrf_score = c.score,
+            dense_score= c.dense_score,
         )
         for c in chunks
     ]

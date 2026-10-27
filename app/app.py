@@ -127,9 +127,9 @@ for msg in st.session_state.chat_history:
         if msg["role"] == "assistant" and msg.get("citations"):
             with st.expander(f"📚 {len(msg['citations'])} Source(s) Used"):
                 for c in msg["citations"]:
+                    page_part = f"  - Page {c['page']}" if c["page"] > 0 else ""
                     st.markdown(
-                        f"**{c['source']}** - Page {c['page']}  "
-                        f"*(relevance: {c['rrf_score']:.3f})*"
+                        f"**{c['source']}** {page_part}  *(relevance: {c['rrf_score']:.3f})*"
                     )
                     st.caption(c["excerpt"])
                     st.divider()
@@ -157,9 +157,9 @@ if prompt := st.chat_input("Ask about fitness or nutrition…"):
         if response.citations:
             with st.expander(f"📚 {len(response.citations)} Source(s) Used"):
                 for c in response.citations:
+                    page_part = f"  - Page {c.page}" if c.page > 0 else ""
                     st.markdown(
-                        f"**{c.source}** - Page {c.page}  "
-                        f"*(relevance: {c.rrf_score:.3f})*"
+                        f"**{c.source}** {page_part}  *(relevance: {c.rrf_score:.3f})*"
                     )
                     st.caption(c.excerpt)
                     st.divider()

@@ -81,7 +81,7 @@ def _load_txt(path: Path) -> Generator[tuple[str, int, str], None, None]:
     try:
         text = path.read_text(encoding="utf-8", errors="replace").strip()
         if text:
-            yield (path.name, 1, text)
+            yield (path.name, 0, text)
     except Exception as e:
         log.warning(f"Could not read {path.name}: {e}")
 

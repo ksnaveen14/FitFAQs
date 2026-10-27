@@ -175,11 +175,13 @@ def retrieve(
             return []
     
     # Build output: attach scores and return Chunk objects
+    dense_score_lookup = dict(dense_res)  # chunk_idx -> cosine similarity, O(1) lookup
     result_chunks: List[Chunk] = []
     for chunk_idx, rrf_score in fused[:top_k]:
         if 0 <= chunk_idx < len(chunks):
             chunk = chunks[chunk_idx]
             chunk.score = rrf_score
+            chunk.dense_score = dense_score_lookup.get(chunk_idx, 0.0)
             result_chunks.append(chunk)
 
     return result_chunks
